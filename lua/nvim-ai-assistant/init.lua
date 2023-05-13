@@ -177,5 +177,7 @@ vim.keymap.set('n', '<Leader>k', ':AskToLLM<Space>')
 
 vim.keymap.set('n', '<Leader>ps', ':!ps -ef |grep https://api.openai.com<CR>')
 
+print("nvim-ai-assistant loaded")
+
 return {call_llm = call_llm, call_llm_visual = call_llm_visual}
 
