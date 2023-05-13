@@ -1,3 +1,4 @@
+local M = {}
 local json = require "dkjson"
 
 local function jobstart(cmd, handlers)
@@ -169,15 +170,23 @@ local function call_llm_visual(start_line, end_line, query)
     call_llm(text)
 end
 
-vim.cmd([[command! -range=% -nargs=1 AskToLLMVisual lua require('custom').call_llm_visual(<line1>, <line2>, <f-args>)]])
-vim.keymap.set('x', '<Leader>k', ':AskToLLMVisual<Space>')
+local function setup()
+  require("nvim-ai-assistant.keymap")
+  require("nvim-ai-assistant.commands")
+end
 
-vim.cmd([[command! -nargs=1 AskToLLM lua require('custom').call_llm(<f-args>)]])
-vim.keymap.set('n', '<Leader>k', ':AskToLLM<Space>')
+M.call_llm_visual = call_llm_visual
+M.call_llm = call_llm
+M.setup = setup
 
-vim.keymap.set('n', '<Leader>ps', ':!ps -ef |grep https://api.openai.com<CR>')
+-- vim.cmd([[command! -range=% -nargs=1 AskToLLMVisual lua require('nvim-ai-assistant').call_llm_visual(<line1>, <line2>, <f-args>)]])
+-- vim.cmd([[command! -nargs=1 AskToLLM lua require('nvim-ai-assistant').call_llm(<f-args>)]])
+-- 
+-- vim.keymap.set('x', '<Leader>k', ':AskToLLMVisual<Space>')
+-- vim.keymap.set('n', '<Leader>k', ':AskToLLM<Space>')
+-- vim.keymap.set('n', '<Leader>ps', ':!ps -ef |grep https://api.openai.com<CR>')
 
 print("nvim-ai-assistant loaded")
 
-return {call_llm = call_llm, call_llm_visual = call_llm_visual}
+return M
 

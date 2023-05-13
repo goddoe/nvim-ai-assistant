@@ -1,0 +1,39 @@
+-- Todo: make it more fancy
+vim.cmd([[command! -range=% -nargs=1 AskToLLMVisual lua require('nvim-ai-assistant').call_llm_visual(<line1>, <line2>, <f-args>)]])
+vim.cmd([[command! -nargs=1 AskToLLM lua require('nvim-ai-assistant').call_llm(<f-args>)]])
+
+-- Todo: future
+-- local M = {}
+-- 
+-- local CMDS = {
+--     {
+--     name = "AskToLLMVisual",
+--     opts = {
+--       range = "%",
+--       nargs = "1",
+--     },
+--     command = function(line1, line2, query)
+--       naa.call_llm_visual(line1, line2, query)
+--     end
+--   },
+--   {
+--     name = "AskToLLM",
+--     opts = {
+--       nargs = "1",
+--     },
+--     command = function(query)
+--       naa.call_llm(query)
+--     end
+--   }
+-- }
+-- 
+-- function M.get()
+--   return vim.deepcopy(CMDS)
+-- end
+-- 
+-- function M.setup()
+--   for _, cmd in ipairs(CMDS) do
+--     local opts = vim.tbl_extend("force", cmd.opts, { force = true })
+--     vim.api.nvim_create_user_command(cmd.name, cmd.command, opts)
+--   end
+-- end
