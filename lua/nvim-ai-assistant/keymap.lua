@@ -1,2 +1,5 @@
-vim.keymap.set('x', '<Leader>k', ':AskToLLMVisual<Space>')
-vim.keymap.set('n', '<Leader>k', ':AskToLLM<Space>')
+vim.keymap.set('x', '<Leader>k', ':NaaAskVisual<Space>')
+vim.keymap.set('n', '<Leader>k', ':NaaAsk<Space>')
+vim.keymap.set('n', '<Leader>rm', ':NaaResetMsgs<CR>')
+vim.keymap.set('n', '<Leader>gm', ':NaaGetMsgs<CR>')
+vim.keymap.set('n', '<Leader>gn', ':NaaGetNumMsgs<CR>')

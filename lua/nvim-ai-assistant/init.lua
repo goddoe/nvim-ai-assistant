@@ -26,8 +26,11 @@ end
 local openai_api_key = os.getenv("OPENAI_API_KEY")
 
 local win_id = nil
-local history = {{role="system",
-                  content="You are a helpful coding assistant that helps with writing code."}}
+
+local system_instruction = {role="system",
+                            content="You are a helpful coding assistant that helps with writing code."}
+
+local message_list = {system_instruction}
 
 local function call_llm(message)
     local lastSentence = nil
@@ -40,10 +43,10 @@ local function call_llm(message)
       role = "user",
       content = message
     }
-    table.insert(history, curr_user_turn)
+    table.insert(message_list, curr_user_turn)
 
     local params = {
-      messages = history,
+      messages = message_list,
       model = "gpt-3.5-turbo"
     }
     params = json.encode(params)
@@ -133,7 +136,7 @@ local function call_llm(message)
       --
             local curr_bot_turn = {role="assistant",
                                    content=response }
-            table.insert(history, curr_bot_turn)
+            table.insert(message_list, curr_bot_turn)
 
             response = "****************************************\n" .. message .. "\n----------------------------------------\n" .. response
             
@@ -169,29 +172,51 @@ local function call_llm_visual(start_line, end_line, query)
     call_llm(text)
 end
 
+local function reset_message_list()
+  message_list = {system_instruction}
+end
+
+
+local function get_curr_message_list()
+  local lines = {}
+  for i, message in ipairs(message_list) do
+    local msg = "----------------------------------------\n" .. message.role .. "\n" .. message.content
+    table.insert(lines, msg)
+  end
+
+  local msgs = table.concat(lines, "\n")
+  vim.api.nvim_echo({{msgs, "Normal"}}, true, {}) -- 출력
+end
+
+local function get_curr_message_num()
+  vim.api.nvim_echo({{"# of messages: " .. #message_list, "Normal"}}, true, {}) -- 출력
+end
+
+
 local function setup_keymap()
   require("nvim-ai-assistant.keymap")
-  print("nvim-ai-assistant keymap loaded")
 end
 
 local function setup_command()
   require("nvim-ai-assistant.commands")
-  print("nvim-ai-assistant command loaded")
 end
 
 local function setup()
   setup_command()
   setup_keymap()
+  print("nvim-ai-assistant loaded")
 end
 
 
 local M = {
   call_llm_visual = call_llm_visual,
   call_llm = call_llm,
+  reset_message_list = reset_message_list,
+  get_curr_message_list = get_curr_message_list,
+  get_curr_message_num = get_curr_message_num,
   setup_keymap = setup_keymap,
   setup_command = setup_command,
   setup = setup,
 }
 
-print("nvim-ai-assistant loaded")
 return M
