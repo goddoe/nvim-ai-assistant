@@ -1,4 +1,3 @@
-local M = {}
 local json = require "dkjson"
 
 local function jobstart(cmd, handlers)
@@ -170,23 +169,18 @@ local function call_llm_visual(start_line, end_line, query)
     call_llm(text)
 end
 
-local function setup()
+local function setup_keymap()
   require("nvim-ai-assistant.keymap")
   require("nvim-ai-assistant.commands")
+  print("nvim-ai-assistant keymap loaded")
 end
 
-M.call_llm_visual = call_llm_visual
-M.call_llm = call_llm
-M.setup = setup
 
--- vim.cmd([[command! -range=% -nargs=1 AskToLLMVisual lua require('nvim-ai-assistant').call_llm_visual(<line1>, <line2>, <f-args>)]])
--- vim.cmd([[command! -nargs=1 AskToLLM lua require('nvim-ai-assistant').call_llm(<f-args>)]])
--- 
--- vim.keymap.set('x', '<Leader>k', ':AskToLLMVisual<Space>')
--- vim.keymap.set('n', '<Leader>k', ':AskToLLM<Space>')
--- vim.keymap.set('n', '<Leader>ps', ':!ps -ef |grep https://api.openai.com<CR>')
+local M = {
+  call_llm_visual = call_llm_visual,
+  call_llm = call_llm,
+  setup_keymap = setup_keymap
+}
 
 print("nvim-ai-assistant loaded")
-
 return M
-
