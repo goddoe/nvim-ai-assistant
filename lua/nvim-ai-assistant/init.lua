@@ -171,15 +171,26 @@ end
 
 local function setup_keymap()
   require("nvim-ai-assistant.keymap")
-  require("nvim-ai-assistant.commands")
   print("nvim-ai-assistant keymap loaded")
+end
+
+local function setup_command()
+  require("nvim-ai-assistant.commands")
+  print("nvim-ai-assistant command loaded")
+end
+
+local function setup()
+  setup_command()
+  setup_keymap()
 end
 
 
 local M = {
   call_llm_visual = call_llm_visual,
   call_llm = call_llm,
-  setup_keymap = setup_keymap
+  setup_keymap = setup_keymap,
+  setup_command = setup_command,
+  setup = setup,
 }
 
 print("nvim-ai-assistant loaded")
