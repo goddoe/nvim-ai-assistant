@@ -47,7 +47,7 @@ local function call_llm(message)
 
     local params = {
       messages = message_list,
-      model = "gpt-3.5-turbo"
+      model = "gpt-4o"
     }
     params = json.encode(params)
 
