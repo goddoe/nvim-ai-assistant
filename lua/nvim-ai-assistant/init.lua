@@ -28,7 +28,7 @@ local openai_api_key = os.getenv("OPENAI_API_KEY")
 local win_id = nil
 
 local system_instruction = {role="system",
-                            content="You are a helpful coding assistant that helps with writing code."}
+                            content="너는 도움이 되는 AI Coding Assistant이다. 사용자의 질문에 기본적으로 한국어로 답변한다."}
 
 local message_list = {system_instruction}
 
